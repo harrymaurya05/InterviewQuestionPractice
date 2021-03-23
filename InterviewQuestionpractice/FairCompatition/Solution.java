@@ -24,59 +24,32 @@ public class Main {
 			
 			while(t != 0){
 				int n = in.nextInt();
-				int arr[] = new int[n];
-				for(int i = 0 ; i < n ; i++){
-					arr[i] = in.nextInt();
-				}
-				HashMap<Integer,Integer> hash = new HashMap<Integer,Integer>();
-				for (int i=0; i<n; i++)
-				if(hash.containsKey(arr[i]))
-					hash.put(arr[i], hash.get(arr[i])+1);
-				else hash.put(arr[i], 1);
-          
-				// find the max frequency
-				int max_count = 0;
-				int most_freq = -1;
-				Set<Integer> s = hash.keySet(); 
-				  
-				for (int i : s)
-					if (max_count < hash.get(i)){
-						max_count = hash.get(i);
-						most_freq = i;
+				int m = in.nextInt();
+				int arr[][] = new int[m][2];
+				int count = 0;
+				HashSet<Integer> hash = new HashSet<Integer>();
+				for(int i = 0 ; i < m ; i++){
+					int l = in.nextInt();
+					int r = in.nextInt();
+					String str = l+",",r;
+					if(!hash.contains(str)){
+						hash.put(str);
+						arr[count][0] = l;
+						arr[count][1] = r;
+						++count;
 					}
-                int res = 0;
-                for(int i = 0 ; i < n ; i++){
-                    if(arr[i] == most_freq){
-                        continue;
-                    } else if(Math.abs(arr[i] - most_freq) < 2){
-						res = Integer.MAX_VALUE;
-						break;
-					} 
-					else if(arr[i] % 2 == 1 && arr[i] != 1){
-                        res++;
-                    }
-                }
-				int fin = res;
-				hash.remove(most_freq);
-				Set<Integer> s1 = hash.keySet();
-				for (int k : s1){
-					res = 0;
-					out.println("key"+k+" value :"+hash.get(k)+" fin :"+fin);
-					most_freq = k;
-					for(int i = 0 ; i < n ; i++){
-						if(arr[i] == most_freq){
-							continue;
-						} else if(Math.abs(arr[i] - most_freq) < 2){
-							res = Integer.MAX_VALUE;
-							break;
-						}
-						else if((Math.abs(most_freq - arr[i]))%2 != 0){
-							res++;
+				}
+				int friend_pair = 0;
+				for(int k = 0 ; k < count -1 ; k++){
+					for(int j = k+1 ; j < count ; j++){
+						if(arr[k][1] == arr[j][0]){
+							friend_pair++;
 						}
 					}
-					fin = Math.min(fin, res);
 				}
-				out.println(fin);
+				int total_pair = n * (n - 1);
+				int friend_pair = (count * 2) + (friend_pair * 2);
+				out.println(total_pair - friend_pair);
 				//out.println();
 				t--;
 			}
