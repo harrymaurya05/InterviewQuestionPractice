@@ -1,6 +1,8 @@
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.*;
+import java.lang.*;
 public class Main {
 
 	public static void main(String[] args) {
@@ -8,28 +10,45 @@ public class Main {
         OutputStream outputStream = System.out;
         FastReader in = new FastReader(inputStream);
         PrintWriter out = new PrintWriter(outputStream);
-        EvenPartition solver = new EvenPartition();
-        //int testCount = Integer.parseInt(in.next());
-        //for (int i = 1; i <= testCount; i++)
-        solver.solve(in, out);
+        Solution solver = new Solution();
+        int testCount = Integer.parseInt(in.next());
+        for (int i = 1; i <= testCount; i++)
+		solver.solve(in, out);
         out.close();
         System.exit(0);
 
 	}
-	static class EvenPartition{
+	static class Solution{
 		public void solve(FastReader in, PrintWriter out) {
 			int n = in.nextInt();
-			int res = 0;
-			if(n == 2){
-				out.println("NO");
-				return;
-			}
-			if(n%2 == 0)
-				out.println("YES");
-			else
-				out.println("NO");
-			//out.println(res);
+			int m = in.nextInt();
+			
+			out.println(n);
 		}
+	}
+	/*DFS ALGO  */
+	static int dfs(ArrayList<ArrayList<Integer>> adj, int s, boolean vis[], int node,PrintWriter out){
+		Stack<Integer> stack = new Stack<Integer>();
+		node++;
+		vis[s] = true;
+		stack.push(s);
+		while(!stack.isEmpty()){
+			int d = stack.pop();
+			out.print(d+" list=>");
+			ArrayList<Integer> e_list = adj.get(d);
+			for(int j = 0 ; j < e_list.size() ; j++){
+				
+				if(!vis[e_list.get(j)]){
+					node++;
+					out.print(e_list.get(j)+" ");
+					vis[e_list.get(j)] = true;
+					stack.push(e_list.get(j));
+				}
+				out.println();
+			}
+			
+		}
+		return node;
 	}
 	 static class FastReader {
 	        static final int BUFSIZE = 1 << 20;
