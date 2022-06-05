@@ -75,10 +75,10 @@ public class Main {
 					ac++;
 					ar--;
 				}
-				int c = curr_col, r=curr_row-1;
+				int c = curr_col-1, r=curr_row-1;
 				
 				while(c>=0 && r>=0){
-					if(lookup[c][r]){
+					if(lookup[r][c]){
 						System.out.println("digonal present!");
 						dig_flag = true;
 						break;
